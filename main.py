@@ -21,7 +21,6 @@ if __name__ == "__main__":
             writer = csv.writer(f)
             writer.writerow(header)
 
-        # print('SIZE\t\t' ,'USED ALGORITHM\t\t\t\t\t', 'IS THE RESULT SORTED?\t\t', 'TIME')
             for i in range(20):
                 print('iteration: ', i)
                 data = []
@@ -30,33 +29,13 @@ if __name__ == "__main__":
                     start = time.time()
                     data_sorted = sort(data_unsorted)
                     end = time.time() - start
-                    # print (f'{size}\t\t', f'{sort.__name__}\t\t\t\t\t\t', sorted(data_unsorted) == data_sorted, '\t\t', end)
                     data.append(end)
                 
                 for proc_no in range(1, multiprocessing.cpu_count()+1):
                     start = time.time()
                     data_sorted = parallel_sort(data_unsorted, proc_no)
                     end = time.time() - start
-                    # print (f'{size}\t\t', f'{parallel_sort.__name__} using {proc_no} processessors\t\t\t', sorted(data_unsorted) == data_sorted, '\t\t', end)
                     data.append(end)
 
                 writer.writerow(data)
-            # start = time.time()
-            # data_sorted = bitonicSort(data_unsorted)
-            # end = time.time() - start
-            # print(f'{size}\t\t', 'bitonic_sort\t\t',sorted(data_unsorted) == data_sorted, '\t\t', end, '\n')
-
                 size = size * 2
-    else:
-        print('SIZE\t\t' ,'USED ALGORITHM\t\t', 'IS THE RESULT SORTED?\t\t', 'TIME')
-        data_unsorted = [random.randint(0, size) for _ in range(size)]
-        for sort in merge_sort, parallel_sort:
-            start = time.time()
-            data_sorted = sort(data_unsorted)
-            end = time.time() - start
-            print (f'{size}\t\t', f'{sort.__name__}\t\t', sorted(data_unsorted) == data_sorted, '\t\t', end,)
-
-        start = time.time()
-        data_sorted = bitonicSort(True, data_unsorted)
-        end = time.time() - start
-        print(f'{size}\t\t', 'bitonic_sort\t\t', sorted(data_unsorted) == data_sorted, '\t\t', end, '\n')
